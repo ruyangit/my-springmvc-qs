@@ -41,8 +41,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/easyshop/category/">商品分类列表</a></li>
-		<shiro:hasPermission name="easyshop:category:edit"><li><a href="${ctx}/easyshop/category/form">商品分类添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/easyshop/category/">分类列表</a></li>
+		<shiro:hasPermission name="easyshop:category:edit"><li><a href="${ctx}/easyshop/category/form">分类添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="category" action="${ctx}/easyshop/category/" method="post" class="breadcrumb form-search">
 		<ul class="ul-form">
@@ -69,7 +69,7 @@
 				{{row.catName}}
 			</a></td>
 			<td>
-				{{row.categoryImg}}
+				<img alt="" src="{{row.categoryImg}}" width="80" height="80">
 			</td>
 			<td>
 				{{row.catDesc}}

@@ -18,8 +18,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/easyshop/user/">会员信息列表</a></li>
-		<shiro:hasPermission name="easyshop:user:edit"><li><a href="${ctx}/easyshop/user/form">会员信息添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/easyshop/user/">会员列表</a></li>
+		<shiro:hasPermission name="easyshop:user:edit"><li><a href="${ctx}/easyshop/user/form">会员添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="user" action="${ctx}/easyshop/user/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

@@ -27,8 +27,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/easyshop/user/">会员信息列表</a></li>
-		<li class="active"><a href="${ctx}/easyshop/user/form?id=${user.id}">会员信息<shiro:hasPermission name="easyshop:user:edit">${not empty user.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="easyshop:user:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/easyshop/user/">会员列表</a></li>
+		<li class="active"><a href="${ctx}/easyshop/user/form?id=${user.id}">会员<shiro:hasPermission name="easyshop:user:edit">${not empty user.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="easyshop:user:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/easyshop/user/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

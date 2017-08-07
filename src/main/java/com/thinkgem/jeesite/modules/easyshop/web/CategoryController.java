@@ -115,7 +115,8 @@ public class CategoryController extends BaseController {
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
 				map.put("pId", e.getParentId());
-				map.put("name", e.getName());
+				map.put("name", e.getCatName());
+				map.put("pIds", e.getParentIds());
 				mapList.add(map);
 			}
 		}

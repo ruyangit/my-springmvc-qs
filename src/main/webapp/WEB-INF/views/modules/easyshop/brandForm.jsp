@@ -27,8 +27,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/easyshop/brand/">商品品牌信息列表</a></li>
-		<li class="active"><a href="${ctx}/easyshop/brand/form?id=${brand.id}">商品品牌信息<shiro:hasPermission name="easyshop:brand:edit">${not empty brand.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="easyshop:brand:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/easyshop/brand/">品牌列表</a></li>
+		<li class="active"><a href="${ctx}/easyshop/brand/form?id=${brand.id}">品牌<shiro:hasPermission name="easyshop:brand:edit">${not empty brand.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="easyshop:brand:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="brand" action="${ctx}/easyshop/brand/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -43,13 +43,14 @@
 		<div class="control-group">
 			<label class="control-label">上传图片：</label>
 			<div class="controls">
-				<form:input path="brandLogo" htmlEscape="false" maxlength="80" class="input-xlarge "/>
+				<form:hidden id="brandLogo" path="brandLogo" htmlEscape="false" maxlength="80" class="input-xlarge"/>
+				<sys:ckfinder input="brandLogo" type="images" uploadPath="/easyshop/brand" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">品牌描述：</label>
 			<div class="controls">
-				<form:input path="brandDesc" htmlEscape="false" class="input-xlarge "/>
+				<form:textarea path="brandDesc" htmlEscape="false" rows="4" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -61,21 +62,7 @@
 		<div class="control-group">
 			<label class="control-label">是否显示：</label>
 			<div class="controls">
-				<form:input path="isShow" htmlEscape="false" maxlength="1" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">排序号码：</label>
-			<div class="controls">
-				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">备注信息：</label>
-			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+				<form:radiobuttons path="isShow" items="${fns:getDictList('show_hide')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</div>
 		</div>
 		<div class="form-actions">
