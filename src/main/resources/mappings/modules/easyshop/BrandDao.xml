@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.easyshop.dao.BrandDao">
+    
+	<sql id="brandColumns">
+		a.id AS "id",
+		a.brand_name AS "brandName",
+		a.brand_logo AS "brandLogo",
+		a.brand_desc AS "brandDesc",
+		a.site_url AS "siteUrl",
+		a.is_show AS "isShow",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="brandJoins">
+	</sql>
+    
+	<select id="get" resultType="Brand">
+		SELECT 
+			<include refid="brandColumns"/>
+		FROM easyshop_brand a
+		<include refid="brandJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Brand">
+		SELECT 
+			<include refid="brandColumns"/>
+		FROM easyshop_brand a
+		<include refid="brandJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="brandName != null and brandName != ''">
+				AND a.brand_name = #{brandName}
+			</if>
+			<if test="isShow != null and isShow != ''">
+				AND a.is_show = #{isShow}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Brand">
+		SELECT 
+			<include refid="brandColumns"/>
+		FROM easyshop_brand a
+		<include refid="brandJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO easyshop_brand(
+			id,
+			brand_name,
+			brand_logo,
+			brand_desc,
+			site_url,
+			is_show,
+			sort,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{brandName},
+			#{brandLogo},
+			#{brandDesc},
+			#{siteUrl},
+			#{isShow},
+			#{sort},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE easyshop_brand SET 	
+			brand_name = #{brandName},
+			brand_logo = #{brandLogo},
+			brand_desc = #{brandDesc},
+			site_url = #{siteUrl},
+			is_show = #{isShow},
+			sort = #{sort},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE easyshop_brand SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

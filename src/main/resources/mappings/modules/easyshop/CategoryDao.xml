@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.easyshop.dao.CategoryDao">
+    
+	<sql id="categoryColumns">
+		a.id AS "id",
+		a.cat_name AS "catName",
+		a.cat_struct_name AS "catStructName",
+		a.category_img AS "categoryImg",
+		a.keywords AS "keywords",
+		a.cat_level AS "catLevel",
+		a.cat_desc AS "catDesc",
+		a.parent_id AS "parent.id",
+		a.parent_ids AS "parentIds",
+		a.template_file AS "templateFile",
+		a.measure_unit AS "measureUnit",
+		a.style AS "style",
+		a.grade AS "grade",
+		a.filter_attr AS "filterAttr",
+		a.is_show AS "isShow",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="categoryJoins">
+	</sql>
+    
+	<select id="get" resultType="Category">
+		SELECT 
+			<include refid="categoryColumns"/>
+		FROM easyshop_category a
+		<include refid="categoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Category">
+		SELECT 
+			<include refid="categoryColumns"/>
+		FROM easyshop_category a
+		<include refid="categoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parent != null and parent.id != null and parent.id != ''">
+				AND a.parent_id = #{parent.id}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+			</if>
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="findAllList" resultType="Category">
+		SELECT 
+			<include refid="categoryColumns"/>
+		FROM easyshop_category a
+		<include refid="categoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="Category">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids
+		FROM easyshop_category a
+		<include refid="categoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.parent_ids LIKE #{parentIds}
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO easyshop_category(
+			id,
+			cat_name,
+			cat_struct_name,
+			category_img,
+			keywords,
+			cat_level,
+			cat_desc,
+			parent_id,
+			parent_ids,
+			template_file,
+			measure_unit,
+			style,
+			grade,
+			filter_attr,
+			is_show,
+			sort,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{catName},
+			#{catStructName},
+			#{categoryImg},
+			#{keywords},
+			#{catLevel},
+			#{catDesc},
+			#{parent.id},
+			#{parentIds},
+			#{templateFile},
+			#{measureUnit},
+			#{style},
+			#{grade},
+			#{filterAttr},
+			#{isShow},
+			#{sort},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE easyshop_category SET 	
+			cat_name = #{catName},
+			cat_struct_name = #{catStructName},
+			category_img = #{categoryImg},
+			keywords = #{keywords},
+			cat_level = #{catLevel},
+			cat_desc = #{catDesc},
+			parent_id = #{parent.id},
+			parent_ids = #{parentIds},
+			template_file = #{templateFile},
+			measure_unit = #{measureUnit},
+			style = #{style},
+			grade = #{grade},
+			filter_attr = #{filterAttr},
+			is_show = #{isShow},
+			sort = #{sort},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE easyshop_category SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE easyshop_category SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE '%,'||#{id}||',%'
+	</update>
+	
+</mapper>
