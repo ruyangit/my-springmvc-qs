@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.easyshop.dao.GoodsDao">
+    
+	<sql id="goodsColumns">
+		a.id AS "id",
+		a.store_id AS "storeId",
+		a.category_id AS "category.id",
+		a.goods_sn AS "goodsSn",
+		a.goods_name AS "goodsName",
+		a.goods_name_style AS "goodsNameStyle",
+		a.click_count AS "clickCount",
+		a.brand_id AS "brandId",
+		a.provider_name AS "providerName",
+		a.goods_number AS "goodsNumber",
+		a.goods_weight AS "goodsWeight",
+		a.default_shipping AS "defaultShipping",
+		a.market_price AS "marketPrice",
+		a.shop_price AS "shopPrice",
+		a.promote_price AS "promotePrice",
+		a.promote_start_date AS "promoteStartDate",
+		a.promote_end_date AS "promoteEndDate",
+		a.warn_number AS "warnNumber",
+		a.keywords AS "keywords",
+		a.goods_brief AS "goodsBrief",
+		a.goods_desc AS "goodsDesc",
+		a.goods_thumb AS "goodsThumb",
+		a.goods_img AS "goodsImg",
+		a.original_img AS "originalImg",
+		a.is_real AS "isReal",
+		a.extension_code AS "extensionCode",
+		a.is_on_sale AS "isOnSale",
+		a.is_alone_sale AS "isAloneSale",
+		a.is_shipping AS "isShipping",
+		a.integral AS "integral",
+		a.create_date AS "createDate",
+		a.sort AS "sort",
+		a.store_sort AS "storeSort",
+		a.del_flag AS "delFlag",
+		a.is_best AS "isBest",
+		a.is_new AS "isNew",
+		a.is_hot AS "isHot",
+		a.is_promote AS "isPromote",
+		a.bonus_type_id AS "bonusTypeId",
+		a.update_date AS "updateDate",
+		a.goods_type AS "goodsType",
+		a.seller_note AS "sellerNote",
+		a.give_integral AS "giveIntegral",
+		a.rank_integral AS "rankIntegral",
+		a.suppliers_id AS "suppliersId",
+		a.is_check AS "isCheck",
+		a.store_hot AS "storeHot",
+		a.store_new AS "storeNew",
+		a.store_best AS "storeBest",
+		a.group_number AS "groupNumber",
+		a.is_xiangou AS "isXiangou",
+		a.xiangou_start_date AS "xiangouStartDate",
+		a.xiangou_end_date AS "xiangouEndDate",
+		a.xiangou_num AS "xiangouNum",
+		a.review_status AS "reviewStatus",
+		a.review_content AS "reviewContent",
+		a.comments_number AS "commentsNumber",
+		a.sales_volume AS "salesVolume",
+		a.model_price AS "modelPrice",
+		a.model_inventory AS "modelInventory",
+		a.model_attr AS "modelAttr"
+	</sql>
+	
+	<sql id="goodsJoins">
+	</sql>
+    
+	<select id="get" resultType="Goods">
+		SELECT 
+			<include refid="goodsColumns"/>
+		FROM easyshop_goods a
+		<include refid="goodsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	
+	<select id="findList" resultType="Goods">
+		SELECT 
+			<include refid="goodsColumns"/>
+		FROM easyshop_goods a
+		<include refid="goodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="category !=null and category.id != null and category.id != ''">
+				AND a.category_id = #{category.id}
+			</if>
+			<if test="goodsSn != null and goodsSn != ''">
+				AND a.goods_sn = #{goodsSn}
+			</if>
+			<if test="goodsName != null and goodsName != ''">
+				AND a.goods_name = #{goodsName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Goods">
+		SELECT 
+			<include refid="goodsColumns"/>
+		FROM easyshop_goods a
+		<include refid="goodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO easyshop_goods(
+			store_id,
+			category_id,
+			goods_sn,
+			goods_name,
+			goods_number,
+			goods_weight,
+			market_price,
+			shop_price,
+			warn_number,
+			is_real,
+			is_on_sale,
+			is_alone_sale,
+			is_shipping,
+			create_date,
+			sort,
+			store_sort,
+			del_flag,
+			is_best,
+			is_new,
+			is_hot,
+			seller_note,
+			integral
+		) VALUES (
+			#{storeId},
+			#{category.id},
+			#{goodsSn},
+			#{goodsName},
+			#{goodsNumber},
+			#{goodsWeight},
+			#{marketPrice},
+			#{shopPrice},
+			#{warnNumber},
+			#{isReal},
+			#{isOnSale},
+			#{isAloneSale},
+			#{isShipping},
+			#{createDate},
+			#{sort},
+			#{storeSort},
+			#{delFlag},
+			#{isBest},
+			#{isNew},
+			#{isHot},
+			#{sellerNote},
+			#{integral}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE easyshop_goods SET 	
+			store_id = #{storeId},
+			category_id = #{category.id},
+			goods_sn = #{goodsSn},
+			goods_name = #{goodsName},
+			goods_name_style = #{goodsNameStyle},
+			click_count = #{clickCount},
+			brand_id = #{brandId},
+			provider_name = #{providerName},
+			goods_number = #{goodsNumber},
+			goods_weight = #{goodsWeight},
+			default_shipping = #{defaultShipping},
+			market_price = #{marketPrice},
+			shop_price = #{shopPrice},
+			promote_price = #{promotePrice},
+			promote_start_date = #{promoteStartDate},
+			promote_end_date = #{promoteEndDate},
+			warn_number = #{warnNumber},
+			keywords = #{keywords},
+			goods_brief = #{goodsBrief},
+			goods_desc = #{goodsDesc},
+			goods_thumb = #{goodsThumb},
+			goods_img = #{goodsImg},
+			original_img = #{originalImg},
+			is_real = #{isReal},
+			extension_code = #{extensionCode},
+			is_on_sale = #{isOnSale},
+			is_alone_sale = #{isAloneSale},
+			is_shipping = #{isShipping},
+			integral = #{integral},
+			sort = #{sort},
+			store_sort = #{storeSort},
+			is_best = #{isBest},
+			is_new = #{isNew},
+			is_hot = #{isHot},
+			is_promote = #{isPromote},
+			bonus_type_id = #{bonusTypeId},
+			update_date = #{updateDate},
+			goods_type = #{goodsType},
+			seller_note = #{sellerNote},
+			give_integral = #{giveIntegral},
+			rank_integral = #{rankIntegral},
+			suppliers_id = #{suppliersId},
+			is_check = #{isCheck},
+			store_hot = #{storeHot},
+			store_new = #{storeNew},
+			store_best = #{storeBest},
+			group_number = #{groupNumber},
+			is_xiangou = #{isXiangou},
+			xiangou_start_date = #{xiangouStartDate},
+			xiangou_end_date = #{xiangouEndDate},
+			xiangou_num = #{xiangouNum},
+			review_status = #{reviewStatus},
+			review_content = #{reviewContent},
+			comments_number = #{commentsNumber},
+			sales_volume = #{salesVolume},
+			model_price = #{modelPrice},
+			model_inventory = #{modelInventory},
+			model_attr = #{modelAttr}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE easyshop_goods SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="getGoodsMaxId" resultType="java.lang.String">
+		select ifnull(max(id),0)+1 as SNID from easyshop_goods
+	</select>
+	
+	<update id="updateGoodsType">
+		UPDATE easyshop_goods SET goods_type = #{goodsType} WHERE id = #{id}
+	</update>
+	
+</mapper>

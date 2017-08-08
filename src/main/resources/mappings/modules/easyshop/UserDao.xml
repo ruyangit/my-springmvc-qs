@@ -5,6 +5,7 @@
 	<sql id="userColumns">
 		a.id AS "id",
 		a.name AS "name",
+		a.sn AS "sn",
 		a.gender AS "gender",
 		a.identity_card AS "identityCard",
 		a.wechat AS "wechat",
@@ -48,6 +49,12 @@
 		<include refid="userJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="sn != null and sn != ''">
+				AND a.sn LIKE 
+					<if test="dbName == 'oracle'">'%'||#{sn}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{sn}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{sn},'%')</if>
+			</if>
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -91,8 +98,8 @@
 	
 	<insert id="insert">
 		INSERT INTO easyshop_user(
-			id,
 			name,
+			sn,
 			gender,
 			identity_card,
 			wechat,
@@ -117,8 +124,8 @@
 			password,
 			integral
 		) VALUES (
-			#{id},
 			#{name},
+			#{sn},
 			#{gender},
 			#{identityCard},
 			#{wechat},
@@ -148,6 +155,7 @@
 	<update id="update">
 		UPDATE easyshop_user SET 	
 			name = #{name},
+			sn = #{sn},
 			gender = #{gender},
 			identity_card = #{identityCard},
 			wechat = #{wechat},

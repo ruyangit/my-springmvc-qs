@@ -28,9 +28,6 @@
 			<li><label>品牌名称：</label>
 				<form:input path="brandName" htmlEscape="false" maxlength="60" class="input-medium"/>
 			</li>
-			<li><label>是否显示：</label>
-				<form:input path="isShow" htmlEscape="false" maxlength="1" class="input-medium"/>
-			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>

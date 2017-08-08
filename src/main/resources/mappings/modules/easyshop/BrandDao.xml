@@ -73,7 +73,6 @@
 	
 	<insert id="insert">
 		INSERT INTO easyshop_brand(
-			id,
 			brand_name,
 			brand_logo,
 			brand_desc,
@@ -87,7 +86,6 @@
 			remarks,
 			del_flag
 		) VALUES (
-			#{id},
 			#{brandName},
 			#{brandLogo},
 			#{brandDesc},

@@ -44,12 +44,6 @@
 		<li class="active"><a href="${ctx}/easyshop/category/">分类列表</a></li>
 		<shiro:hasPermission name="easyshop:category:edit"><li><a href="${ctx}/easyshop/category/form">分类添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="category" action="${ctx}/easyshop/category/" method="post" class="breadcrumb form-search">
-		<ul class="ul-form">
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>
 	<sys:message content="${message}"/>
 	<table id="treeTable" class="table table-striped table-bordered table-condensed">
 		<thead>

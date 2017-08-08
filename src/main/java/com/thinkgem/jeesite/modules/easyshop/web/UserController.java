@@ -23,11 +23,11 @@ import com.thinkgem.jeesite.modules.easyshop.entity.User;
 import com.thinkgem.jeesite.modules.easyshop.service.UserService;
 
 /**
- * 会员信息Controller
+ * 会员Controller
  * @author RuYang
- * @version 2017-08-07
+ * @version 2017-08-08
  */
-@Controller("EasyshopUserController")
+@Controller("easyshopUserController")
 @RequestMapping(value = "${adminPath}/easyshop/user")
 public class UserController extends BaseController {
 
@@ -68,7 +68,7 @@ public class UserController extends BaseController {
 			return form(user, model);
 		}
 		userService.save(user);
-		addMessage(redirectAttributes, "保存会员信息成功");
+		addMessage(redirectAttributes, "保存会员成功");
 		return "redirect:"+Global.getAdminPath()+"/easyshop/user/?repage";
 	}
 	
@@ -76,7 +76,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(User user, RedirectAttributes redirectAttributes) {
 		userService.delete(user);
-		addMessage(redirectAttributes, "删除会员信息成功");
+		addMessage(redirectAttributes, "删除会员成功");
 		return "redirect:"+Global.getAdminPath()+"/easyshop/user/?repage";
 	}
 

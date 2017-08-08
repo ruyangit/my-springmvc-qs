@@ -11,15 +11,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 会员信息Entity
+ * 会员Entity
  * @author RuYang
- * @version 2017-08-07
+ * @version 2017-08-08
  */
 @Alias("EasyshopUser")
 public class User extends DataEntity<User> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;		// 姓名
+	private String sn;		// 编号
 	private String gender;		// 性别0：未知1：男2：女
 	private String identityCard;		// 身份证
 	private String wechat;		// 微信
@@ -53,6 +54,15 @@ public class User extends DataEntity<User> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Length(min=0, max=255, message="编号长度必须介于 0 和 255 之间")
+	public String getSn() {
+		return sn;
+	}
+
+	public void setSn(String sn) {
+		this.sn = sn;
 	}
 	
 	@Length(min=0, max=1, message="性别0：未知1：男2：女长度必须介于 0 和 1 之间")

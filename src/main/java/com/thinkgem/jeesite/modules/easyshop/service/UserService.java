@@ -14,11 +14,11 @@ import com.thinkgem.jeesite.modules.easyshop.entity.User;
 import com.thinkgem.jeesite.modules.easyshop.dao.UserDao;
 
 /**
- * 会员信息Service
+ * 会员Service
  * @author RuYang
- * @version 2017-08-07
+ * @version 2017-08-08
  */
-@Service("EasyshopUserService")
+@Service("easyshopUserService")
 @Transactional(readOnly = true)
 public class UserService extends CrudService<UserDao, User> {
 

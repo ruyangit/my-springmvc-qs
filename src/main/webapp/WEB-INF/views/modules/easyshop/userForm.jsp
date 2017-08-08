@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>会员信息管理</title>
+	<title>会员管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -41,118 +41,23 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">性别0：未知1：男2：女：</label>
+			<label class="control-label">编号：</label>
 			<div class="controls">
-				<form:input path="gender" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+				<form:input path="sn" htmlEscape="false" maxlength="64"  class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">身份证：</label>
+			<label class="control-label">积分：</label>
 			<div class="controls">
-				<form:input path="identityCard" htmlEscape="false" maxlength="36" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">微信：</label>
-			<div class="controls">
-				<form:input path="wechat" htmlEscape="false" maxlength="50" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">QQ：</label>
-			<div class="controls">
-				<form:input path="qq" htmlEscape="false" maxlength="20" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">出生日期：</label>
-			<div class="controls">
-				<input name="birth" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${user.birth}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">出生地：</label>
-			<div class="controls">
-				<form:input path="birthPlace" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">签发地：</label>
-			<div class="controls">
-				<form:input path="issuePlace" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">签发时间：</label>
-			<div class="controls">
-				<input name="issueDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${user.issueDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">到期时间：</label>
-			<div class="controls">
-				<input name="expiryDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${user.expiryDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">头像：</label>
-			<div class="controls">
-				<form:input path="photo" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">护照：</label>
-			<div class="controls">
-				<form:input path="passport" htmlEscape="false" maxlength="36" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">护照照片：</label>
-			<div class="controls">
-				<form:input path="passportPhoto" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">电话：</label>
-			<div class="controls">
-				<form:input path="phone" htmlEscape="false" maxlength="36" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">邮件：</label>
-			<div class="controls">
-				<form:input path="email" htmlEscape="false" maxlength="36" class="input-xlarge "/>
+				<form:input path="integral" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">登录名称：</label>
-			<div class="controls">
-				<form:input path="username" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">登录密码：</label>
-			<div class="controls">
-				<form:input path="password" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">integral：</label>
-			<div class="controls">
-				<form:input path="integral" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="form-actions">

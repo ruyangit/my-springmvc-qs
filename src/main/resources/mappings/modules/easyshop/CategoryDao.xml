@@ -85,7 +85,6 @@
 	
 	<insert id="insert">
 		INSERT INTO easyshop_category(
-			id,
 			cat_name,
 			cat_struct_name,
 			category_img,
@@ -108,7 +107,6 @@
 			remarks,
 			del_flag
 		) VALUES (
-			#{id},
 			#{catName},
 			#{catStructName},
 			#{categoryImg},

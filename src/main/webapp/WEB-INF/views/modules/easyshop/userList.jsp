@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>会员信息管理</title>
+	<title>会员管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -28,8 +28,8 @@
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>登录名称：</label>
-				<form:input path="username" htmlEscape="false" maxlength="255" class="input-medium"/>
+			<li><label>会员编号：</label>
+				<form:input path="sn" htmlEscape="false" maxlength="255" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -40,13 +40,9 @@
 		<thead>
 			<tr>
 				<th>姓名</th>
-				<th>性别0：未知1：男2：女</th>
-				<th>微信</th>
-				<th>QQ</th>
-				<th>电话</th>
+				<th>会员编号</th>
+				<th>积分</th>
 				<th>更新时间</th>
-				<th>登录名称</th>
-				<th>integral</th>
 				<shiro:hasPermission name="easyshop:user:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -57,29 +53,17 @@
 					${user.name}
 				</a></td>
 				<td>
-					${user.gender}
-				</td>
-				<td>
-					${user.wechat}
-				</td>
-				<td>
-					${user.qq}
-				</td>
-				<td>
-					${user.phone}
-				</td>
-				<td>
-					<fmt:formatDate value="${user.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${user.username}
+					${user.sn}
 				</td>
 				<td>
 					${user.integral}
 				</td>
+				<td>
+					<fmt:formatDate value="${user.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
 				<shiro:hasPermission name="easyshop:user:edit"><td>
     				<a href="${ctx}/easyshop/user/form?id=${user.id}">修改</a>
-					<a href="${ctx}/easyshop/user/delete?id=${user.id}" onclick="return confirmx('确认要删除该会员信息吗？', this.href)">删除</a>
+					<a href="${ctx}/easyshop/user/delete?id=${user.id}" onclick="return confirmx('确认要删除该会员吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
