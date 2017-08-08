@@ -5,4 +5,5 @@
 	<decorator name="blank" page="layouts/blank.jsp" />
 	<decorator name="default" page="layouts/default.jsp" />
 	
+	<decorator name="front_default" page="front/default.jsp" />
 </decorators>

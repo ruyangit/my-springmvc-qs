@@ -44,4 +44,8 @@ public class UserService extends CrudService<UserDao, User> {
 		super.delete(user);
 	}
 	
+	public User getBySn(String sn){
+		return this.dao.getBySn(sn);
+	}
+	
 }

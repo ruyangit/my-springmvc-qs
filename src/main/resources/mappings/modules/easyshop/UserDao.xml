@@ -42,6 +42,14 @@
 		WHERE a.id = #{id}
 	</select>
 	
+	<select id="getBySn" resultType="EasyshopUser">
+		SELECT 
+			<include refid="userColumns"/>
+		FROM easyshop_user a
+		<include refid="userJoins"/>
+		WHERE a.sn = #{sn}
+	</select>
+	
 	<select id="findList" resultType="EasyshopUser">
 		SELECT 
 			<include refid="userColumns"/>

@@ -3,7 +3,6 @@
  */
 package com.thinkgem.jeesite.modules.easyshop.entity;
 
-import com.thinkgem.jeesite.modules.sys.entity.User;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
@@ -21,6 +20,7 @@ public class QsAnswer extends DataEntity<QsAnswer> {
 	private String questionId;		// 问卷
 	private String anId;		// 问题
 	private String value;		// 答案
+	private String userId;
 	
 	public QsAnswer() {
 		super();
@@ -64,6 +64,14 @@ public class QsAnswer extends DataEntity<QsAnswer> {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

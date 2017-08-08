@@ -14,5 +14,5 @@ import com.thinkgem.jeesite.modules.easyshop.entity.User;
  */
 @MyBatisDao("easyshopUserDao")
 public interface UserDao extends CrudDao<User> {
-	
+	public User getBySn(String sn);
 }
