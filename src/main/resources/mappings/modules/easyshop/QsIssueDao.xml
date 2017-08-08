@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.easyshop.dao.QsIssueDao">
+    
+	<sql id="qsIssueColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.question_type AS "questionType",
+		a.is_need AS "isNeed",
+		a.max_an AS "maxAn",
+		a.sort AS "sort",
+		a.options AS "options",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.question_id AS "questionId"
+	</sql>
+	
+	<sql id="qsIssueJoins">
+	</sql>
+    
+	<select id="get" resultType="QsIssue">
+		SELECT 
+			<include refid="qsIssueColumns"/>
+		FROM easyshop_qs_issue a
+		<include refid="qsIssueJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="QsIssue">
+		SELECT 
+			<include refid="qsIssueColumns"/>
+		FROM easyshop_qs_issue a
+		<include refid="qsIssueJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+			<if test="questionId != null and questionId != ''">
+				AND a.question_id = #{questionId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort asc
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="QsIssue">
+		SELECT 
+			<include refid="qsIssueColumns"/>
+		FROM easyshop_qs_issue a
+		<include refid="qsIssueJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} 
+			<if test="questionId != null and questionId != ''">
+				AND a.question_id = #{questionId}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort asc
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO easyshop_qs_issue(
+			title,
+			question_type,
+			is_need,
+			max_an,
+			sort,
+			options,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			question_id
+		) VALUES (
+			#{title},
+			#{questionType},
+			#{isNeed},
+			#{maxAn},
+			#{sort},
+			#{options},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{questionId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE easyshop_qs_issue SET 	
+			title = #{title},
+			question_type = #{questionType},
+			is_need = #{isNeed},
+			max_an = #{maxAn},
+			sort = #{sort},
+			options = #{options},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			question_id = #{questionId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE easyshop_qs_issue SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

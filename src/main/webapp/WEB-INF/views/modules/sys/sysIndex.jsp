@@ -125,8 +125,8 @@
 					}
 				});
 			}
-			getNotifyNum(); //<c:if test="${oaNotifyRemindInterval ne '' && oaNotifyRemindInterval ne '0'}">
-			setInterval(getNotifyNum, ${oaNotifyRemindInterval}); //</c:if>
+			//getNotifyNum(); //<c:if test="${oaNotifyRemindInterval ne '' && oaNotifyRemindInterval ne '0'}">
+			//setInterval(getNotifyNum, ${oaNotifyRemindInterval}); //</c:if>
 		});
 		// <c:if test="${tabmode eq '1'}"> 添加一个页签
 		function addTab($this, refresh){
