@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.user_id AS "user.id",
 		a.question_id AS "questionId",
-		a.an_id AS "anId",
+		a.issue_id AS "issueId",
 		a.value AS "value",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -75,7 +75,7 @@
 		INSERT INTO easyshop_qs_answer(
 			user_id,
 			question_id,
-			an_id,
+			issue_id,
 			value,
 			create_by,
 			create_date,
@@ -86,7 +86,7 @@
 		) VALUES (
 			#{user.id},
 			#{questionId},
-			#{anId},
+			#{issueId},
 			#{value},
 			#{createBy.id},
 			#{createDate},
@@ -101,7 +101,7 @@
 		UPDATE easyshop_qs_answer SET 	
 			user_id = #{user.id},
 			question_id = #{questionId},
-			an_id = #{anId},
+			issue_id = #{issueId},
 			value = #{value},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

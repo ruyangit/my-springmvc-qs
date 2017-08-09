@@ -757,4 +757,4 @@
     targetType   : 'hint'
   };
 
-})(jQuery);
+})(Zepto);

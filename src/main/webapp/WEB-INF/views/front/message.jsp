@@ -6,8 +6,14 @@
 <title>消息提醒</title>
 </head>
 <body>
+<div class="page">
+<div class="content">
+  <div class="content-block" style="text-align: center;">
 <c:if test="${not empty message}">
-	${message}
+${message}
 </c:if>
+</div>
+</div>
+</div>
 </body>
 </html>

@@ -4,9 +4,10 @@
 <head>
 <meta name="decorator" content="front_default"/>
 <title>认证</title>
+
 </head>
 <body>
-<div class="page">
+<div class="page" id="page" v-cloak>
 <c:if test="${not empty message}">
 <script type="text/javascript">$.toast('${message}');</script>
 </c:if>
@@ -14,7 +15,6 @@
   <h1 class="title">编号认证</h1>
 </header>
 <div class="content">
-<form action="${ctx }/user" method="post" id="myform">
 	<div class="list-block">
     <ul>
       <!-- Text inputs -->
@@ -24,8 +24,8 @@
           <div class="item-inner">
             <div class="item-title label">会员编号</div>
             <div class="item-input">
-              <input type="hidden" name="callback" value="${callback }">
-			<input type="tel" name="sn" id="sn">
+              <input type="hidden" v-model='callback'>
+			  <input type="tel" v-model="sn">
             </div>
           </div>
         </div>
@@ -35,23 +35,45 @@
   </div>
   <div class="content-block">
     <div class="row">
-      <div class="col-100"><a href="#" id="submitBtn" class="button button-big button-fill button-success">下一页</a></div>
+      <div class="col-100"><a href="#" @click="login" class="button button-big button-fill button-success">下一页</a></div>
     </div>
   </div>
-
-</form>
 </div>
 </div>
 <script type="text/javascript">
-$(function(){
-	$("#submitBtn").on("click",function(){
-		if($("#sn").val()==''){
-			$.toast("请输入会员编号");
-			return false
-		}else{
-			$("#myform").submit();
+new Vue({
+	el:'#page',
+	data:{
+		callback: '${callback }',
+		sn: '',
+	},
+	beforeCreate: function(){
+		if(self != top){
+			top.location.href = self.location.href;
 		}
-	})
+	},
+	methods: {
+		login: function () {
+			if(!this.sn){
+				$.toast("请输入会员编号");
+				return false
+			}
+            var data = "sn="+this.sn+"&callback="+this.callback;
+			$.ajax({
+				type: "POST",
+			    url: "${ctx}/user",
+			    data: data,
+			    dataType: "json",
+			    success: function(ret){
+					if(ret.code == 200){//登录成功
+                    	parent.location.href =ret.data.callback;
+					}else{
+						$.toast(ret.message);
+					}
+				}
+			});
+		}
+	}
 });
 </script>
 </body>

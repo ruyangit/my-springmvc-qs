@@ -38,6 +38,14 @@ public class QsAnswerService extends CrudService<QsAnswerDao, QsAnswer> {
 	public void save(QsAnswer qsAnswer) {
 		super.save(qsAnswer);
 	}
+	@Transactional(readOnly = false)
+	public void save(List<QsAnswer> list) {
+		if(list!=null&&list.size()>0){
+			for (QsAnswer qsAnswer : list) {
+				super.save(qsAnswer);
+			}
+		}
+	}
 	
 	@Transactional(readOnly = false)
 	public void delete(QsAnswer qsAnswer) {

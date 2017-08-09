@@ -3,6 +3,9 @@
  */
 package com.thinkgem.jeesite.modules.easyshop.web.front;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.thinkgem.jeesite.common.utils.HttpUtil;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -39,19 +43,19 @@ public class UserController extends BaseController {
 		return "front/auth";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = { "auth", "" }, method = RequestMethod.POST)
-	public String auth(HttpServletRequest request, Model model) {
+	public Map<String, Object> auth(HttpServletRequest request, Model model) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 200);
 		String callback = request.getParameter("callback");
-		if (StringUtils.isNotEmpty(callback)) {
-			model.addAttribute("callback", callback);
-		}
-		
 		String sn = request.getParameter("sn");
 		// 获取文章内容
 		User user = userService.getBySn(sn);
 		if (user == null || !User.DEL_FLAG_NORMAL.equals(user.getDelFlag())) {
-			addMessage(model, "用户信息获取失败");
-			return "front/auth";
+			result.put("code", 400);
+			result.put("message", "用户信息获取失败");
+			return result;
 		}
 		request.getSession().setAttribute(User.SESSION_KEY, user);
 		/*
@@ -62,6 +66,9 @@ public class UserController extends BaseController {
 		} else {
 			callback = HttpUtil.decodeURL(callback);
 		}
-		return "redirect:" + callback;
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("callback", callback);
+		result.put("data", data);
+		return result;
 	}
 }

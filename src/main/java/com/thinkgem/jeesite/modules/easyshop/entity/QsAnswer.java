@@ -18,7 +18,7 @@ public class QsAnswer extends DataEntity<QsAnswer> {
 	private static final long serialVersionUID = 1L;
 	private User user;		// 问卷
 	private String questionId;		// 问卷
-	private String anId;		// 问题
+	private String issueId;		// 问题
 	private String value;		// 答案
 	private String userId;
 	
@@ -48,23 +48,16 @@ public class QsAnswer extends DataEntity<QsAnswer> {
 		this.questionId = questionId;
 	}
 	
-	@Length(min=1, max=1, message="问题长度必须介于 1 和 1 之间")
-	public String getAnId() {
-		return anId;
-	}
-
-	public void setAnId(String anId) {
-		this.anId = anId;
-	}
 	
-	@Length(min=1, max=2000, message="答案长度必须介于 1 和 2000 之间")
-	public String getValue() {
-		return value;
+
+	public String getIssueId() {
+		return issueId;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setIssueId(String issueId) {
+		this.issueId = issueId;
 	}
+
 
 	public String getUserId() {
 		return userId;
@@ -73,5 +66,15 @@ public class QsAnswer extends DataEntity<QsAnswer> {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	
 	
 }

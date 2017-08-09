@@ -6,7 +6,6 @@
 <meta name="decorator" content="front_default" />
 <title>问答</title>
 <link href="${ctxStatic}/raty/jquery.raty.css"  type="text/css">
-<script src="${ctxStatic}/jquery/jquery-1.8.3.js"></script>
 <script src="${ctxStatic}/raty/jquery.raty.js"></script>
 <style type="text/css">
 .content{
@@ -19,14 +18,16 @@ margin-bottom: 50px;
 	<div class="page">
 		<c:if test="${not empty message}">
 			<script type="text/javascript">
-				//$.toast('${message}');
+				alert('${message}');
+				location.href='${ctx}/question?id=${questionId}';
 			</script>
 		</c:if>
 		<header class="bar bar-nav">
 				<h1 class="title">${qsQuestion.title}</h1>
 			</header>
 		<div class="content">
-			
+			<form action="${ctx }/answer/save" method="post" id="myform">
+			<input type="hidden" name="questionId" value="${qsQuestion.id}">
 			<c:forEach items="${qsIssueList }" var="item" varStatus="i">
 				<div class="card">
 					<div class="card-header">${item.title}
@@ -34,6 +35,7 @@ margin-bottom: 50px;
 					（最多选择${item.maxAn }个答案）
 					</c:if>
 					</div>
+					
 					<div class="card-content">
 						<div class="card-content-inner">
 							<c:choose>
@@ -64,8 +66,8 @@ margin-bottom: 50px;
 										
 										$("#questionType${i.index+1 } input[type=checkbox]").on("click",function(){
 											if($("#questionType${i.index+1 } input[type=checkbox]:checked").length>3){
-												alert('最多选择${item.maxAn }个答案');
-												$(this).attr("checked",false);
+												$.toast('最多选择${item.maxAn }个答案')
+												$(this).prop("checked",false);
 											}
 										})
 									</script>
@@ -89,14 +91,24 @@ margin-bottom: 50px;
 							</c:choose>
 						</div>
 					</div>
+					
 					<!-- <div class="card-footer">卡脚</div> -->
 				</div>
 			</c:forEach>
+			</form>
 		</div>
 		<nav class="bar bar-tab">
 			<a href="#" class="tab-item external active" id="submitBtn">提交问卷调查</a>
 		</nav>
+		
 	</div>
-	
+	<script type="text/javascript">
+	$(function(){
+		$("#submitBtn").on("click",function(){
+			$.toast('你还未完成所有题目')
+			$("#myform").submit();
+		})
+	})
+	</script>
 </body>
 </html>

@@ -5,7 +5,6 @@ package com.thinkgem.jeesite.modules.easyshop.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpUtils;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -28,10 +27,7 @@ public class FrontInterceptor extends HandlerInterceptorAdapter {
 		Object obj = request.getSession().getAttribute(User.SESSION_KEY);
 		if (obj == null) {
 			String retUrl = HttpUtil.getQueryString(request, "UTF-8");
-//            logger.debug("loginAgain redirect pageUrl.." + retUrl);
-			System.out.println(retUrl);
             response.sendRedirect(HttpUtil.encodeRetURL(Global.getFrontPath() + "/user", "callback", retUrl));
-//			response.sendRedirect(Global.getFrontPath() + "/user");
 			return false;
 		}
 		return true;
