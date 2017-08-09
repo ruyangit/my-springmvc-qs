@@ -3,6 +3,7 @@ package com.thinkgem.jeesite.modules.easyshop.service;
 import java.util.List;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.easyshop.dao.GoodsDao;
 import com.thinkgem.jeesite.modules.easyshop.entity.Goods;
+import com.thinkgem.jeesite.modules.easyshop.entity.User;
 
 /**
  * GoodsService
@@ -20,6 +22,9 @@ import com.thinkgem.jeesite.modules.easyshop.entity.Goods;
 @Service
 @Transactional(readOnly = true)
 public class GoodsService extends CrudService<GoodsDao, Goods> {
+	
+	@Autowired
+	private UserService userService;
 
 	public Goods get(String id) {
 		return super.get(id);
@@ -65,6 +70,24 @@ public class GoodsService extends CrudService<GoodsDao, Goods> {
 			goods.preUpdate();
 			dao.update(goods);
 		}
+	}
+	
+	@Transactional(readOnly = false)
+	public boolean exchange(Goods goods,User user) {
+		goods = get(goods.getId());
+		user = userService.get(user.getId());
+		int integral = Integer.parseInt(user.getIntegral())-Integer.parseInt(goods.getIntegral());
+		int goodsNumber = Integer.parseInt(goods.getGoodsNumber())-1;
+		if(integral<0||goodsNumber<0){
+			return false;
+		}
+		user.setIntegral(integral+"");
+		userService.save(user);
+		
+		goods.preUpdate();
+		goods.setGoodsNumber(goodsNumber+"");
+		dao.update(goods);
+		return true;
 	}
 	
 	@Transactional(readOnly = false)

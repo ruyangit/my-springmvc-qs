@@ -3,17 +3,15 @@
 <html>
 <head>
 <meta name="decorator" content="front_default"/>
-<title>认证</title>
-
+<title>编号认证</title>
+<script type='text/javascript' src="${ctxStatic}/vue/vue.js"></script>
 </head>
 <body>
 <div class="page" id="page" v-cloak>
-<c:if test="${not empty message}">
-<script type="text/javascript">$.toast('${message}');</script>
-</c:if>
+<!-- 
 <header class="bar bar-nav">
   <h1 class="title">编号认证</h1>
-</header>
+</header> -->
 <div class="content">
 	<div class="list-block">
     <ul>
@@ -54,6 +52,7 @@ new Vue({
 	},
 	methods: {
 		login: function () {
+			$.showIndicator();
 			if(!this.sn){
 				$.toast("请输入会员编号");
 				return false
@@ -65,6 +64,7 @@ new Vue({
 			    data: data,
 			    dataType: "json",
 			    success: function(ret){
+			    	$.hideIndicator();
 					if(ret.code == 200){//登录成功
                     	parent.location.href =ret.data.callback;
 					}else{
@@ -75,6 +75,7 @@ new Vue({
 		}
 	}
 });
+$.init();
 </script>
 </body>
 </html>

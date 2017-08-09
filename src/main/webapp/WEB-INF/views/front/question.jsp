@@ -105,7 +105,7 @@ margin-bottom: 50px;
 	<script type="text/javascript">
 	$(function(){
 		$("#submitBtn").on("click",function(){
-			$.toast('你还未完成所有题目')
+			//$.toast('你还未完成所有题目')
 			$("#myform").submit();
 		})
 	})

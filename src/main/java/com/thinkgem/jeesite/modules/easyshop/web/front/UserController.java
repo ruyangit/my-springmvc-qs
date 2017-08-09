@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.HttpUtil;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -70,5 +71,15 @@ public class UserController extends BaseController {
 		data.put("callback", callback);
 		result.put("data", data);
 		return result;
+	}
+	
+	@RequestMapping(value = { "info"}, method = RequestMethod.GET)
+	public String info(HttpServletRequest request, Model model) {
+		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
+		if(user==null){
+			return "redirect:"+Global.getFrontPath()+"/goods";
+		}
+		model.addAttribute("user", user);
+		return "front/info";
 	}
 }
