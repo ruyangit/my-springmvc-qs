@@ -67,7 +67,7 @@
 				<shiro:hasPermission name="easyshop:qsQuestion:edit"><td>
     				<a href="${ctx}/easyshop/qsIssue/edit?questionId=${qsQuestion.id}">问题</a>&nbsp;
     				<a href="/front/question?id=${qsQuestion.id}">查看问卷</a>&nbsp;
-    				<a href="${ctx}/easyshop/qsQuestion/form?id=${qsQuestion.id}">统计问卷</a>&nbsp;
+    				<a href="${ctx}/easyshop/qsQuestion/form?id=${qsQuestion.id}">编辑</a>&nbsp;
 					<a href="${ctx}/easyshop/qsQuestion/delete?id=${qsQuestion.id}" onclick="return confirmx('确认要删除该问卷吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

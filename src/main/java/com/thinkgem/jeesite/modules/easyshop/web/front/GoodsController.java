@@ -38,6 +38,9 @@ public class GoodsController extends BaseController {
 	
 	@RequestMapping(value ="")
 	public String index(Goods goods, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
+		request.getSession().setAttribute(User.SESSION_KEY, userService.get(user.getId()));
+		model.addAttribute("user", user);
 		return "front/goods";
 	}
 	
@@ -46,6 +49,7 @@ public class GoodsController extends BaseController {
 	public Map<String, Object> list(Goods goods, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 200);
+		goods.setIsOnSale("1");
 		Page<Goods> page = goodsService.findPage(new Page<Goods>(request, response), goods); 
 		result.put("data", page);
 		return result;
@@ -54,6 +58,8 @@ public class GoodsController extends BaseController {
 	@RequestMapping(value ="detail")
 	public String detail(HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
+		user = userService.get(user.getId());
+		request.getSession().setAttribute(User.SESSION_KEY, user);
 		String id = request.getParameter("id");
 		if(StringUtils.isBlank(id)){
 			addMessage(model, "商品编号不能为空");
@@ -86,6 +92,7 @@ public class GoodsController extends BaseController {
 	@RequestMapping(value = "exchange", method = RequestMethod.POST)
 	public Map<String, Object> exchange(HttpServletRequest request, Model model) {
 		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
+		user = userService.get(user.getId());
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 200);
 		
@@ -111,7 +118,7 @@ public class GoodsController extends BaseController {
 			return result;
 		}else if(Integer.parseInt(goods.getIntegral())>Integer.parseInt(user.getIntegral())){
 			result.put("code", 405);
-			result.put("message", "你的积分不足");
+			result.put("message", "您的积分不足");
 			return result;
 		}
 		
@@ -121,7 +128,7 @@ public class GoodsController extends BaseController {
 			result.put("message", "兑换失败");
 			return result;
 		}
-		request.getSession().setAttribute(User.SESSION_KEY, userService.get(user.getId()));
+		request.getSession().setAttribute(User.SESSION_KEY, user);
 		return result;
 	}
 }

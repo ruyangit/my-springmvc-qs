@@ -19,6 +19,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/easyshop/goods/">商品列表</a></li>
+		<li><a href="${ctx}/easyshop/goods/form">商品添加</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="goods" action="${ctx}/easyshop/goods/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -43,11 +44,10 @@
 				<th>唯一货号</th>
 				<th>积分</th>
 				<th>上架</th>
-				<th>精品</th>
-				<th>新品</th>
-				<th>热销</th>
 				<th>库存</th>
 				<th>排序</th>
+				<th>更新时间</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -56,20 +56,17 @@
 				<td></td>
 				<td>
 				<a href="${ctx}/easyshop/goods/form?id=${goods.id}&category.id=${goods.category.id}">${goods.goodsName }</a>
-				<div style="display: none">
-    				<a href="${ctx}/easyshop/goods/form?id=${goods.id}">修改</a>
-    				<a href="${ctx}/easyshop/goods/form?id=${goods.id}">预览</a>
-					<a href="${ctx}/easyshop/goods/delete?id=${goods.id}" onclick="return confirmx('确认要删除该商品吗？', this.href)">删除</a>
-				</div>
 				</td>
 				<td>${goods.goodsSn }</td>
 				<td>${goods.integral }</td>
 				<td>${goods.isOnSale }</td>
-				<td>${goods.isBest }</td>
-				<td>${goods.isNew }</td>
-				<td>${goods.isHot }</td>
 				<td>${goods.goodsNumber }</td>
 				<td>${goods.storeSort }</td>
+				<td><fmt:formatDate value="${goods.updateDate }" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+				<td>
+				<a href="${ctx}/easyshop/goods/form?id=${goods.id}">修改</a>
+					<a href="${ctx}/easyshop/goods/delete?id=${goods.id}" onclick="return confirmx('确认要删除该商品吗？', this.href)">删除</a>
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>

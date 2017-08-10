@@ -50,22 +50,23 @@ public class GoodsController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(Goods goods, HttpServletRequest request, HttpServletResponse response, Model model) {
 //		goods.setStoreId(MerchantUtils.getCurrentMerchantSessionUser().getMerchantsId());
+		goods.setIsOnSale(null);
 		Page<Goods> page = goodsService.findPage(new Page<Goods>(request, response), goods); 
 		model.addAttribute("page", page);
 		return "modules/easyshop/goodsList";
 	}
 	
-	@RequestMapping(value = "add")
-	public String add(Goods goods, Model model) {
-		model.addAttribute("goods", goods);
-		model.addAttribute("categoryList", categoryService.findList(new Category()));
-		return "modules/easyshop/goodsAdd";
-	}
+//	@RequestMapping(value = "add")
+//	public String add(Goods goods, Model model) {
+//		model.addAttribute("goods", goods);
+//		model.addAttribute("categoryList", categoryService.findList(new Category()));
+//		return "modules/easyshop/goodsAdd";
+//	}
 
 	@RequestMapping(value = "form")
 	public String form(Goods goods, Model model,HttpServletRequest request) {
-		String viewName = request.getParameter("viewName");
-		if(StringUtils.isNotBlank(viewName)){
+//		String viewName = request.getParameter("viewName");
+//		if(StringUtils.isNotBlank(viewName)){
 			
 //			//获取关联图片
 //			if("goodsFormGallery".equals(viewName)){
@@ -117,18 +118,18 @@ public class GoodsController extends BaseController {
 //				}
 //			}
 			
-			model.addAttribute("goods", goods);
-			model.addAttribute("viewName", viewName);
-			return "modules/easyshop/"+viewName;
-		}else{
+//			model.addAttribute("goods", goods);
+//			model.addAttribute("viewName", viewName);
+//			return "modules/easyshop/"+viewName;
+//		}else{
 //			goods.setStoreId(MerchantUtils.getCurrentMerchantSessionUser().getMerchantsId());
-			goods.setCategory(categoryService.get(goods.getCategory().getId()));
+//			goods.setCategory(categoryService.get(goods.getCategory().getId()));
 //			MerchantsGoodsCategory merchantsGoodsCategory = new MerchantsGoodsCategory();
 //			merchantsGoodsCategory.setStoreId(MerchantUtils.getCurrentMerchantSessionUser().getMerchantsId());
 //			model.addAttribute("merchantsGoodsCategoryList", merchantsGoodsCategoryService.findList(merchantsGoodsCategory));
 			model.addAttribute("goods", goods);
 			return "modules/easyshop/goodsForm";
-		}
+//		}
 	}
 
 	@RequestMapping(value = "save")
@@ -137,8 +138,8 @@ public class GoodsController extends BaseController {
 			return form(goods, model,request);
 		}
 		
-		String viewName = request.getParameter("viewName");
-		if(StringUtils.isNotBlank(viewName)){
+		//String viewName = request.getParameter("viewName");
+		//if(StringUtils.isNotBlank(viewName)){
 //			if("goodsFormGallery".equals(viewName)){
 //				goodsGalleryService.saveEasy(goods);
 //			}else if("goodsFormAttr".equals(viewName)){
@@ -149,15 +150,15 @@ public class GoodsController extends BaseController {
 //				String attr_price_list[] = request.getParameterValues("attr_price_list[]");
 //				goodsAttrService.saveEasy(id, goodsType, attr_id_list, attr_value_list, attr_price_list);
 //			}else{
-				goodsService.saveEasy(goods);
+				//goodsService.saveEasy(goods);
 //			}
-			addMessage(redirectAttributes, "保存成功");
-			return "redirect:"+Global.getAdminPath()+"/easyshop/goods/form?id="+goods.getId()+"&viewName="+viewName;
-		}else{
+		//	addMessage(redirectAttributes, "保存成功");
+			//return "redirect:"+Global.getAdminPath()+"/easyshop/goods/form?id="+goods.getId()+"&viewName="+viewName;
+		//}else{
 			goodsService.saveEasy(goods);
 			addMessage(redirectAttributes, "保存成功");
 			return "redirect:"+Global.getAdminPath()+"/easyshop/goods/?repage";
-		}
+		//}
 	}
 	
 	@RequestMapping(value = "delete")

@@ -71,6 +71,12 @@ public class AnswerController extends BaseController {
 			answer.setIssueId(qi.getId());
 			if(qi.getQuestionType().equals("3")){
 				String[] values = request.getParameterValues("name"+i);
+				
+				if(values==null||values.length==0){
+					addMessage(model, "你有未完成的答案未填写，请返回重新填写");
+					return "front/message";
+				}
+				
 				String value = "";
 				for(int j=0;j<values.length;j++){ 
 					value+=","+values[j];
@@ -78,6 +84,10 @@ public class AnswerController extends BaseController {
 				answer.setValue(value.substring(1));
 			}else{
 				String value = request.getParameter("name"+i);
+				if(StringUtils.isBlank(value)){
+					addMessage(model, "你有未完成的答案未填写，请返回重新填写");
+					return "front/message";
+				}
 				answer.setValue(value);
 			}
 			list.add(answer);

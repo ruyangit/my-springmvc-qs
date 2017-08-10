@@ -60,7 +60,7 @@ public class QuestionController extends BaseController {
 			qsAnswer.setUserId(user.getId());
 			List<QsAnswer> list = qsAnswerService.findList(qsAnswer);
 			if(list!=null&&list.size()>0){
-				addMessage(model, "已完成问卷调查，不可进行重复操作");
+				addMessage(model, "您已完成问卷调查");
 				return "front/message";
 			}
 			

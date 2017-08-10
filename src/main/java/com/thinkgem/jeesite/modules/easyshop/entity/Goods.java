@@ -80,6 +80,9 @@ public class Goods extends DataEntity<Goods> {
 	
 	public Goods() {
 		super();
+		this.category= new Category();
+		this.category.setId("0");
+		
 		this.storeId = "1";
 		this.goodsNumber = "1000";
 		this.shopPrice="0";
@@ -95,6 +98,7 @@ public class Goods extends DataEntity<Goods> {
 		this.storeSort="0";
 		this.goodsWeight = "0";
 		this.isReal="0";
+		this.integral = "1000";
 	}
 
 	public Goods(String id){

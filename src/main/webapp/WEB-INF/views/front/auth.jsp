@@ -20,7 +20,7 @@
         <div class="item-content">
           <div class="item-media"><i class="icon icon-form-name"></i></div>
           <div class="item-inner">
-            <div class="item-title label">会员编号</div>
+            <div class="item-title label">会员编号：</div>
             <div class="item-input">
               <input type="hidden" v-model='callback'>
 			  <input type="tel" v-model="sn">
@@ -52,11 +52,11 @@ new Vue({
 	},
 	methods: {
 		login: function () {
-			$.showIndicator();
 			if(!this.sn){
 				$.toast("请输入会员编号");
 				return false
 			}
+			$.showIndicator();
             var data = "sn="+this.sn+"&callback="+this.callback;
 			$.ajax({
 				type: "POST",

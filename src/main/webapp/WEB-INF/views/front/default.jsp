@@ -15,6 +15,10 @@
 	<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 	<script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
 	<sitemesh:head/>
+	<style type="text/css">
+	.bar-tab .tab-item{color:#fff;}
+	.bar,.button-success.button-fill{background-color: #ff9630;color:#fff;}
+	</style>
 </head>
 <body><div class="page-group">
 	<sitemesh:body/>

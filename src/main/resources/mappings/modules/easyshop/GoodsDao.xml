@@ -85,14 +85,18 @@
 		<include refid="goodsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<!-- 
 			<if test="category !=null and category.id != null and category.id != ''">
 				AND a.category_id = #{category.id}
-			</if>
+			</if> -->
 			<if test="goodsSn != null and goodsSn != ''">
 				AND a.goods_sn = #{goodsSn}
 			</if>
 			<if test="goodsName != null and goodsName != ''">
 				AND a.goods_name = #{goodsName}
+			</if>
+			<if test="isOnSale != null and isOnSale != ''">
+				AND a.is_on_sale = #{isOnSale}
 			</if>
 		</where>
 		<choose>
@@ -100,7 +104,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.sort asc,a.update_date desc
 			</otherwise>
 		</choose>
 	</select>
@@ -146,7 +150,9 @@
 			is_new,
 			is_hot,
 			seller_note,
-			integral
+			integral,
+			goods_img,
+			goods_desc
 		) VALUES (
 			#{storeId},
 			#{category.id},
@@ -169,7 +175,9 @@
 			#{isNew},
 			#{isHot},
 			#{sellerNote},
-			#{integral}
+			#{integral},
+			#{goodsImg},
+			#{goodsDesc}
 		)
 	</insert>
 	

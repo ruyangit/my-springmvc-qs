@@ -19,7 +19,7 @@
     </div>
   </div>
   <nav class="bar bar-tab">
-			<a href="${ctx }/user/info" class="create-popup tab-item external active">查看我的积分</a>
+			<a class="create-popup tab-item external">查看积分</a>
 		</nav>
 </div>
 
@@ -53,17 +53,24 @@ $(function() {
 				      for (var i = 0; i <ret.data.list.length; i++) {
 				    	var item = ret.data.list[i];
 				        //html += '<li class="item-content"><div class="item-inner"><div class="item-title">新条目</div></div></li>';
-				        if(item.goodsImg){
-					        html += '<div class="card demo-card-header-pic"><div valign="bottom" class="card-header color-white no-border no-padding"><img class="card-cover" src="'+item.goodsImg+'" alt=""></div><div class="card-content"><div class="card-content-inner"><p class="color-gray" style="position: relative">商品编号：'+item.goodsSn+'<span style="position: absolute;right: 0px;"><strong class="color-danger">'+item.integral+'</strong> 积分</span></p><p>'+item.goodsName+'</p></div></div><div class="card-footer"><a href="#" class="link color-gray">库存：'+item.goodsNumber+'</a>';
+					  	if(item.goodsImg){
+					    	html += '<div onclick="gotoUrl(\'${ctx}/goods/detail?id='+item.id+'\')" class="card demo-card-header-pic"><div valign="bottom" class="card-header color-white no-border no-padding"><img class="card-cover" src="'+item.goodsImg+'" alt=""></div>';
+					        //html += '<div class="card demo-card-header-pic"><div valign="bottom" class="card-header color-white no-border no-padding"><img class="card-cover" src="'+item.goodsImg+'" alt=""></div><div class="card-content"><div class="card-content-inner"><p class="color-gray" style="position: relative">商品编号：'+item.goodsSn+'<span style="position: absolute;right: 0px;"><strong class="color-danger">'+item.integral+'</strong> 积分</span></p><p>'+item.goodsName+'</p></div></div><div class="card-footer"><a href="#" class="link color-gray">库存：'+item.goodsNumber+'</a>';
 				        }else{
-					        html += '<div class="card demo-card-header-pic"><div class="card-content"><div class="card-content-inner"><p>'+item.goodsName+'</p><p class="color-gray" style="position: relative">商品编号：'+item.goodsSn+'<span style="position: absolute;right: 0px;"><strong class="color-danger">'+item.integral+'</strong> 积分</span></p></div></div><div class="card-footer"><a href="#" class="link color-gray">库存：'+item.goodsNumber+'</a>';
+					        html += '<div onclick="gotoUrl(\'${ctx}/goods/detail?id='+item.id+'\')" class="card demo-card-header-pic"><div class="card-content"><div class="card-content-inner"><p>'+item.goodsName+'</p></div></div>';
 				        }
-				        if(item.goodsNumber<=0){
-					        html += '<a href="#" class="link color-gray">暂无库存</a>'
-				        }else{
-					        html += '<a href="${ctx}/goods/detail?id='+item.id+'" class="link">兑换</a>'
-				        }
-				        html += '</div></div>'
+					    //if(item.goodsImg){
+					   //     html += '<div class="card demo-card-header-pic"><div valign="bottom" class="card-header color-white no-border no-padding"><img class="card-cover" src="'+item.goodsImg+'" alt=""></div><div class="card-content"><div class="card-content-inner"><p class="color-gray" style="position: relative">商品编号：'+item.goodsSn+'<span style="position: absolute;right: 0px;"><strong class="color-danger">'+item.integral+'</strong> 积分</span></p><p>'+item.goodsName+'</p></div></div><div class="card-footer"><a href="#" class="link color-gray">库存：'+item.goodsNumber+'</a>';
+				       // }else{
+					    //    html += '<div class="card demo-card-header-pic"><div class="card-content"><div class="card-content-inner"><p>'+item.goodsName+'</p><p class="color-gray" style="position: relative">商品编号：'+item.goodsSn+'<span style="position: absolute;right: 0px;"><strong class="color-danger">'+item.integral+'</strong> 积分</span></p></div></div><div class="card-footer"><a href="#" class="link color-gray">库存：'+item.goodsNumber+'</a>';
+				        //}
+				        //if(item.goodsNumber<=0){
+					    //    html += '<a href="#" class="link color-gray">暂无库存</a>'
+				       // }else{
+					     //   html += '<a href="${ctx}/goods/detail?id='+item.id+'" class="link">兑换</a>'
+				       // }
+				        //html += '</div></div>'
+				        html += '</div>'
 				      }
 				      cb(html);
 				}
@@ -114,11 +121,17 @@ $(function() {
 	   
 	  });
 	
-	  
 	
+	  
+	 $(".create-popup").on("click",function(){
+		 $.alert('我的积分：${user.integral }<br/><span style="color:#ff9630">推荐订婚礼即得500积分</span>',['温馨提示']);
+	 });
 	
 	  $.init();
 })
+function gotoUrl(url){
+		location.href=url;
+	}
 </script>
 </body>
 </html>

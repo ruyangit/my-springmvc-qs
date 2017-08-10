@@ -15,16 +15,11 @@ margin-bottom: 50px;
 
 </head>
 <body>
-	<div class="page">
-		<c:if test="${not empty message}">
-			<script type="text/javascript">
-				alert('${message}');
-				location.href='${ctx}/question?id=${questionId}';
-			</script>
-		</c:if>
+	<div class="page" id="page-preloader">
+		<!-- 
 		<header class="bar bar-nav">
 				<h1 class="title">${qsQuestion.title}</h1>
-			</header>
+			</header> -->
 		<div class="content">
 			<form action="${ctx }/answer/save" method="post" id="myform">
 			<input type="hidden" name="questionId" value="${qsQuestion.id}">
@@ -98,7 +93,7 @@ margin-bottom: 50px;
 			</form>
 		</div>
 		<nav class="bar bar-tab">
-			<a href="#" class="tab-item external active" id="submitBtn">提交问卷调查</a>
+			<a href="#" class="tab-item external active" id="submitBtn" style="color:#fff;">提交问卷调查</a>
 		</nav>
 		
 	</div>
@@ -106,9 +101,22 @@ margin-bottom: 50px;
 	$(function(){
 		$("#submitBtn").on("click",function(){
 			//$.toast('你还未完成所有题目')
+			$.showIndicator();
 			$("#myform").submit();
 		})
 	})
 	</script>
+	<c:if test="${not empty message}">
+			<script type="text/javascript">
+			$(function(){
+			$(document).on("pageInit", "#page-preloader", function(e, id, page) {
+				$.alert('${message}',function(){
+					location.href='${ctx}/question?id=${questionId}';
+				});
+			});
+			 $.init();
+			})
+			</script>
+		</c:if>
 </body>
 </html>
