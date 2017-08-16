@@ -48,6 +48,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		<!-- 
 		<div class="control-group">
 			<label class="control-label">商品库存数量：</label>
 			<div class="controls">
@@ -61,7 +62,7 @@
 				<form:input path="warnNumber" htmlEscape="false" maxlength="3" class="input-mini required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-		</div>
+		</div> -->
 		<div class="control-group">
 			<label class="control-label">兑换积分数：</label>
 			<div class="controls">
@@ -79,7 +80,7 @@
 		</div>
 	
 		<div class="control-group">
-			<label class="control-label">详细描述：</label>
+			<label class="control-label">商品图片：</label>
 			<div class="controls">
 				<form:textarea id="content" htmlEscape="true"  path="goodsDesc" rows="4" maxlength="200" class="input-xxlarge"/>
 				<sys:ckeditor replace="content" uploadPath="/easyshop/goods" />

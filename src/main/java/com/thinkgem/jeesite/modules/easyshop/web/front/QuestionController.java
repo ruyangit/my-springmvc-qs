@@ -41,8 +41,45 @@ public class QuestionController extends BaseController {
 	@Autowired
 	private QsAnswerService qsAnswerService;
 	
-	@RequestMapping(value = {"list", ""})
-	public String list(QsQuestion qsQuestion, HttpServletRequest request, HttpServletResponse response, Model model) {
+	@RequestMapping("")
+	public String index(QsQuestion qsQuestion, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
+		QsQuestion entity = new QsQuestion();
+		entity.setStatus("1");
+		List<QsQuestion> qlist = qsQuestionService.findList(qsQuestion);
+		
+		
+//		QsQuestion entity = null;
+		if (qlist!=null&&qlist.size()>0){
+			entity = qlist.get(0);
+		}else{
+			addMessage(model, "未获取到问卷信息");
+			return "front/message";
+		}
+		QsAnswer qsAnswer = new QsAnswer();
+		qsAnswer.setQuestionId(entity.getId());
+		qsAnswer.setUserId(user.getId());
+		List<QsAnswer> list = qsAnswerService.findList(qsAnswer);
+		if(list!=null&&list.size()>0){
+			addMessage(model, "您已完成问卷调查");
+			return "front/message";
+		}
+		
+		if(!entity.getStatus().equals("1")){
+			addMessage(model, entity.getTitle()+",问卷还未发布");
+			return "front/message";
+		}
+		
+		model.addAttribute("qsQuestion", entity);
+		QsIssue qsIssue = new QsIssue();
+		qsIssue.setQuestionId(entity.getId());
+		List<QsIssue> qsIssueList =  qsIssueService.findList(qsIssue);
+		model.addAttribute("qsIssueList", qsIssueList);
+		return "front/question";
+	}
+	
+	@RequestMapping(value = "get")
+	public String get(QsQuestion qsQuestion, HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
 		String questionId = request.getParameter("id");
 		

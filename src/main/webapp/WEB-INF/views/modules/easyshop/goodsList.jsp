@@ -44,7 +44,6 @@
 				<th>唯一货号</th>
 				<th>积分</th>
 				<th>上架</th>
-				<th>库存</th>
 				<th>排序</th>
 				<th>更新时间</th>
 				<th>操作</th>
@@ -60,7 +59,6 @@
 				<td>${goods.goodsSn }</td>
 				<td>${goods.integral }</td>
 				<td>${goods.isOnSale }</td>
-				<td>${goods.goodsNumber }</td>
 				<td>${goods.storeSort }</td>
 				<td><fmt:formatDate value="${goods.updateDate }" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 				<td>

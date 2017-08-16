@@ -3,6 +3,9 @@
  */
 package com.thinkgem.jeesite.modules.easyshop.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.easyshop.entity.QsIssue;
@@ -14,5 +17,5 @@ import com.thinkgem.jeesite.modules.easyshop.entity.QsIssue;
  */
 @MyBatisDao
 public interface QsIssueDao extends CrudDao<QsIssue> {
-	
+	public List<QsIssue> findListAndAnswer(Map<String, Object> param);
 }

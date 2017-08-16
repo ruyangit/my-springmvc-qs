@@ -50,8 +50,7 @@
 							<th>题号</th>
 							<th>问题</th>
 							<th>类型</th>
-							<th>答案</th>
-							<th>排序</th>
+							<th>选项</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -59,7 +58,7 @@
 					<c:forEach items="${qsIssueList}" var="qsIssue"  varStatus="i">
 						<tr>
 							<td>
-								Q${i.index+1 }、
+								Q${qsIssue.sort}、
 							</td>
 							<td>
 								${qsIssue.title}
@@ -69,9 +68,6 @@
 							</td>
 							<td>
 								${qsIssue.options}
-							</td>
-							<td>
-								${qsIssue.sort}
 							</td>
 							<td>
 			    				<a href="${ctx}/easyshop/qsIssue/edit?id=${qsIssue.id}">修改</a>
@@ -84,6 +80,13 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">题号：</label>
+			<div class="controls">
+				<form:input path="sort" htmlEscape="false" class="input-mini required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">问题：</label>
 			<div class="controls">
 				<form:input path="title" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
@@ -93,30 +96,14 @@
 		<div class="control-group">
 			<label class="control-label">类型：</label>
 			<div class="controls">
-				<form:select path="questionType" class="input-xlarge required">
+				<form:select path="questionType" class="input-mini required">
 					<form:option value="" label="请选择"/>
 					<form:options items="${fns:getDictList('question_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">是否必填：</label>
-			<div class="controls">
-				<form:select path="isNeed" class="input-xlarge required">
-					<form:option value="" label="请选择"/>
-					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">排序（升序）：</label>
-			<div class="controls">
-				<form:input path="sort" htmlEscape="false" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
+		
 		<div style="display: none" id="type1">
 			<div class="control-group">
 				<label class="control-label">选项：</label>

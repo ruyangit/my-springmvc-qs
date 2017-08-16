@@ -55,7 +55,7 @@ public class UserController extends BaseController {
 		User user = userService.getBySn(sn);
 		if (user == null || !User.DEL_FLAG_NORMAL.equals(user.getDelFlag())) {
 			result.put("code", 400);
-			result.put("message", "用户信息获取失败");
+			result.put("message", "信息获取失败");
 			return result;
 		}
 		request.getSession().setAttribute(User.SESSION_KEY, user);

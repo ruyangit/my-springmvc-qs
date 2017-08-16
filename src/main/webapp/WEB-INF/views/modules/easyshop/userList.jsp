@@ -62,6 +62,7 @@
 					<fmt:formatDate value="${user.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="easyshop:user:edit"><td>
+    				<a href="${ctx}/easyshop/qsIssue/view?userId=${user.id}&sn=${user.sn}">查看问卷</a>
     				<a href="${ctx}/easyshop/user/form?id=${user.id}">修改</a>
 					<a href="${ctx}/easyshop/user/delete?id=${user.id}" onclick="return confirmx('确认要删除该会员吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>

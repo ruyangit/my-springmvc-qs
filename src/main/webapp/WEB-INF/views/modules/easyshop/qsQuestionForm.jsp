@@ -40,6 +40,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		<!-- 
 		<div class="control-group">
 			<label class="control-label">发布时间：</label>
 			<div class="controls">
@@ -48,6 +49,7 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</div>
 		</div>
+		
 		<div class="control-group">
 			<label class="control-label">截止时间：</label>
 			<div class="controls">
@@ -55,21 +57,21 @@
 					value="<fmt:formatDate value="${qsQuestion.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">状态：</label>
-			<div class="controls">
-				<form:select path="status" class="input-xlarge required">
-					<form:option value=""  label="请选择发布状态"/>
-					<form:options items="${fns:getDictList('question_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
+		</div> -->
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">状态：</label>
+			<div class="controls">
+				<form:select path="status" class="input-mini required">
+					<form:option value=""  label="--请选择--"/>
+					<form:options items="${fns:getDictList('question_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="form-actions">

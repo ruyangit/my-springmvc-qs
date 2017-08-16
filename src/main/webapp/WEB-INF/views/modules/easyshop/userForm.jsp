@@ -40,11 +40,17 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		
 		<div class="control-group">
 			<label class="control-label">编号：</label>
 			<div class="controls">
-				<form:input path="sn" htmlEscape="false" maxlength="64"  class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<c:if test="${not empty user.id }">
+					<form:input path="sn" htmlEscape="false" maxlength="64"  class="input-xlarge" readonly="true" />
+				</c:if>
+				<c:if test="${empty user.id }">
+					<form:input path="sn" htmlEscape="false" maxlength="64"  class="input-xlarge required" />
+					<span class="help-inline"><font color="red">*</font> </span>
+				</c:if>
 			</div>
 		</div>
 		<div class="control-group">

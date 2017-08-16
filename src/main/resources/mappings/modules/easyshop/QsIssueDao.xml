@@ -131,4 +131,15 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="findListAndAnswer"  resultType="QsIssue">
+	select t2.title,t2.question_type,t2.max_an,t2.`options`,t2.sort,t1.value from 
+	easyshop_qs_answer t1,
+	easyshop_qs_issue t2,
+	easyshop_user t3
+	where 
+	t1.issue_id = t2.id
+	and t1.user_id = t3.id
+	and t1.question_id=#{questionId}
+	and t3.id=#{userId}
+	</select>
 </mapper>

@@ -21,7 +21,7 @@ margin-bottom: 50px;
 				<h1 class="title">${qsQuestion.title}</h1>
 			</header> -->
 		<div class="content">
-			<form action="${ctx }/answer/save" method="post" id="myform">
+			<form action="" method="post" id="myform">
 			<input type="hidden" name="questionId" value="${qsQuestion.id}">
 			<c:forEach items="${qsIssueList }" var="item" varStatus="i">
 				<div class="card">
@@ -98,25 +98,29 @@ margin-bottom: 50px;
 		
 	</div>
 	<script type="text/javascript">
+	
 	$(function(){
+		
+		//console.log(options)
 		$("#submitBtn").on("click",function(){
-			//$.toast('你还未完成所有题目')
 			$.showIndicator();
-			$("#myform").submit();
-		})
+       		
+       		//console.log($('#myform').serialize())
+       		$.post('${ctx }/answer/save', $('#myform').serialize(), function(response){
+       			$.hideIndicator();
+       			
+       		  if(response.code==200){
+       			 $.alert('感谢您的信任与支持<br>我们已经收到你的反馈','温馨提示',function(){
+       				location.href='${ctx}/question';
+       			 });
+       			
+       		  }else{
+       			 $.alert(response.message,'温馨提示');
+       		  }
+       		})
+       		return false;
+		});
 	})
 	</script>
-	<c:if test="${not empty message}">
-			<script type="text/javascript">
-			$(function(){
-			$(document).on("pageInit", "#page-preloader", function(e, id, page) {
-				$.alert('${message}',function(){
-					location.href='${ctx}/question?id=${questionId}';
-				});
-			});
-			 $.init();
-			})
-			</script>
-		</c:if>
 </body>
 </html>

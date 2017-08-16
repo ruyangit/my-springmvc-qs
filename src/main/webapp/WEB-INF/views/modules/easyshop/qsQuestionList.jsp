@@ -43,9 +43,8 @@
 		<thead>
 			<tr>
 				<th>标题</th>
-				<th>发布日期</th>
-				<th>截止日期</th>
 				<th>状态</th>
+				<th>更新时间</th>
 				<shiro:hasPermission name="easyshop:qsQuestion:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -56,17 +55,12 @@
 					${qsQuestion.title}
 				</a></td>
 				<td>
-					<fmt:formatDate value="${qsQuestion.pushDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					<fmt:formatDate value="${qsQuestion.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
 					${fns:getDictLabel(qsQuestion.status, 'question_status', '无')}
 				</td>
+				<td><fmt:formatDate value="${qsQuestion.updateDate }" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 				<shiro:hasPermission name="easyshop:qsQuestion:edit"><td>
-    				<a href="${ctx}/easyshop/qsIssue/edit?questionId=${qsQuestion.id}">问题</a>&nbsp;
-    				<a href="/front/question?id=${qsQuestion.id}">查看问卷</a>&nbsp;
+    				<a href="${ctx}/easyshop/qsIssue/edit?questionId=${qsQuestion.id}">问题编辑</a>&nbsp;
+    				<a href="/front/question/get?id=${qsQuestion.id}" target="_blank">查看问卷</a>&nbsp;
     				<a href="${ctx}/easyshop/qsQuestion/form?id=${qsQuestion.id}">编辑</a>&nbsp;
 					<a href="${ctx}/easyshop/qsQuestion/delete?id=${qsQuestion.id}" onclick="return confirmx('确认要删除该问卷吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>

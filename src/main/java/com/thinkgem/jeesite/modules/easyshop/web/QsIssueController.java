@@ -3,9 +3,12 @@
  */
 package com.thinkgem.jeesite.modules.easyshop.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,4 +95,57 @@ public class QsIssueController extends BaseController {
 		model.addAttribute("qsIssueList", qsIssueList);
 		return "modules/easyshop/qsIssueEdit";
 	}
+	
+	
+	@RequestMapping("view")
+	public String index(QsQuestion qsQuestion, HttpServletRequest request, HttpServletResponse response, Model model) {
+		QsQuestion entity = new QsQuestion();
+		entity.setStatus("1");
+		List<QsQuestion> qlist = qsQuestionService.findList(qsQuestion);
+		
+		if (qlist!=null&&qlist.size()>0){
+			entity = qlist.get(0);
+		}else{
+			addMessage(model, "未获取到问卷信息");
+			return "modules/easyshop/qsIssueView";
+		}
+		model.addAttribute("qsQuestion", entity);
+		String sn = request.getParameter("sn");
+		model.addAttribute("sn", sn);
+		String userId = request.getParameter("userId");
+		model.addAttribute("userId", userId);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("questionId", entity.getId());
+		param.put("userId", userId);
+		List<QsIssue> qsIssueList = qsIssueService.findListAndAnswer(param);
+		
+		for (QsIssue qsIssue : qsIssueList) {
+			if(qsIssue.getQuestionType().equals("1")){
+				//文本
+			}else if(qsIssue.getQuestionType().equals("2")||qsIssue.getQuestionType().equals("3")){
+				//单选
+				String[] os  = qsIssue.getOptions().split(",");
+				String[] vs  = qsIssue.getValue().split(",");
+				String value = "";
+				for (int i=0;i<os.length;i++) {
+					for (int j=0;j<vs.length;j++) {
+						if(vs[j].equals(i+"")){
+							value += ","+os[i];
+						}
+					}
+				}
+				if(value.length()>0){
+					qsIssue.setValue(value.substring(1));
+				}
+				
+			}else if(qsIssue.getQuestionType().equals("4")){
+				//评分
+				qsIssue.setValue(qsIssue.getValue()+"星");
+			}
+		}
+		
+		model.addAttribute("qsIssueList", qsIssueList);
+		return "modules/easyshop/qsIssueView";
+	}
+
 }

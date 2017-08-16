@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.easyshop.entity.QsQuestion;
 import com.thinkgem.jeesite.modules.easyshop.service.QsQuestionService;
 
@@ -79,5 +79,5 @@ public class QsQuestionController extends BaseController {
 		addMessage(redirectAttributes, "删除问卷成功");
 		return "redirect:"+Global.getAdminPath()+"/easyshop/qsQuestion/?repage";
 	}
-
+	
 }

@@ -4,7 +4,9 @@
 package com.thinkgem.jeesite.modules.easyshop.web.front;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -20,6 +24,7 @@ import com.thinkgem.jeesite.modules.easyshop.entity.QsIssue;
 import com.thinkgem.jeesite.modules.easyshop.entity.User;
 import com.thinkgem.jeesite.modules.easyshop.service.QsAnswerService;
 import com.thinkgem.jeesite.modules.easyshop.service.QsIssueService;
+import com.thinkgem.jeesite.modules.easyshop.utils.SmsUtil;
 
 /**
  * 答案Controller
@@ -36,12 +41,16 @@ public class AnswerController extends BaseController {
 	@Autowired
 	private QsIssueService qsIssueService;
 	
-	@RequestMapping(value = "save")
-	public String save(HttpServletRequest request, Model model) {
+	@ResponseBody
+	@RequestMapping(value = "save", method = RequestMethod.POST)
+	public Map<String, Object> save(HttpServletRequest request, Model model) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 200);
 		String questionId = request.getParameter("questionId");
 		if(StringUtils.isBlank(questionId)){
-			addMessage(model, "问卷编号不能为空");
-			return "front/message";
+			result.put("code", 400);
+			result.put("message", "问卷编号不能为空");
+			return result;
 		}
 		User user = (User) request.getSession().getAttribute(User.SESSION_KEY);
 		
@@ -49,8 +58,9 @@ public class AnswerController extends BaseController {
 		qsIssue.setQuestionId(questionId);
 		List<QsIssue> qsIssueList =  qsIssueService.findList(qsIssue);
 		if(qsIssueList==null){
-			addMessage(model, "未获取到问题列表");
-			return "front/message";
+			result.put("code", 400);
+			result.put("message", "未获取到问题列表");
+			return result;
 		}
 		
 		QsAnswer qsAnswer = new QsAnswer();
@@ -58,8 +68,9 @@ public class AnswerController extends BaseController {
 		qsAnswer.setUserId(user.getId());
 		List<QsAnswer> answerList = qsAnswerService.findList(qsAnswer);
 		if(answerList!=null&&answerList.size()>0){
-			addMessage(model, "已完成问卷调查，不可进行重复操作");
-			return "front/message";
+			result.put("code", 400);
+			result.put("message", "您已完成问卷调查");
+			return result;
 		}
 		
 		List<QsAnswer> list = new ArrayList<QsAnswer>();
@@ -69,12 +80,14 @@ public class AnswerController extends BaseController {
 			answer.setUser(user);
 			answer.setQuestionId(questionId);
 			answer.setIssueId(qi.getId());
+			
 			if(qi.getQuestionType().equals("3")){
 				String[] values = request.getParameterValues("name"+i);
 				
 				if(values==null||values.length==0){
-					addMessage(model, "你有未完成的答案未填写，请返回重新填写");
-					return "front/message";
+					result.put("code", 400);
+					result.put("message", "你有未完成的答案");
+					return result;
 				}
 				
 				String value = "";
@@ -85,8 +98,9 @@ public class AnswerController extends BaseController {
 			}else{
 				String value = request.getParameter("name"+i);
 				if(StringUtils.isBlank(value)){
-					addMessage(model, "你有未完成的答案未填写，请返回重新填写");
-					return "front/message";
+					result.put("code", 400);
+					result.put("message", "你有未完成的答案");
+					return result;
 				}
 				answer.setValue(value);
 			}
@@ -94,9 +108,8 @@ public class AnswerController extends BaseController {
 		}
 		
 		qsAnswerService.save(list);
-		model.addAttribute("questionId", questionId);
-		addMessage(model, "感谢您的信任与支持，我们已经收到你的反馈");
-		return "front/question";
+		new SmsUtil(2, user.getSn()).start();
+		return result;
 	}
 
 }

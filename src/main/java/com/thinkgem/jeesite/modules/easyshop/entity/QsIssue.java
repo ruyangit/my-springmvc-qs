@@ -23,9 +23,19 @@ public class QsIssue extends DataEntity<QsIssue> {
 	private String questionId;		// question_id
 	private String options;		// 答案（多个答案以英文,号分割）
 	
+	private String value; //答案
 	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public QsIssue() {
 		super();
+		this.isNeed="1";
 	}
 
 	public QsIssue(String id){

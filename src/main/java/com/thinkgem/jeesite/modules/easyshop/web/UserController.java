@@ -67,6 +67,11 @@ public class UserController extends BaseController {
 		if (!beanValidator(model, user)){
 			return form(user, model);
 		}
+		User isUser = userService.getBySn(user.getSn());
+		if(isUser!=null&&StringUtils.isBlank(user.getId())){
+			model.addAttribute("message", "编号已经存在");
+			return "modules/easyshop/userForm";
+		}
 		userService.save(user);
 		addMessage(redirectAttributes, "保存会员成功");
 		return "redirect:"+Global.getAdminPath()+"/easyshop/user/?repage";

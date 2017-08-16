@@ -28,6 +28,7 @@ public class QsQuestion extends DataEntity<QsQuestion> {
 	public QsQuestion() {
 		super();
 //		this.status = "3";
+		this.sort = "0";
 	}
 
 	public QsQuestion(String id){

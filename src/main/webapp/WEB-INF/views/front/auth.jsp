@@ -20,7 +20,7 @@
         <div class="item-content">
           <div class="item-media"><i class="icon icon-form-name"></i></div>
           <div class="item-inner">
-            <div class="item-title label">会员编号：</div>
+            <div class="item-title label">订单编号：</div>
             <div class="item-input">
               <input type="hidden" v-model='callback'>
 			  <input type="tel" v-model="sn">
@@ -39,43 +39,45 @@
 </div>
 </div>
 <script type="text/javascript">
-new Vue({
-	el:'#page',
-	data:{
-		callback: '${callback }',
-		sn: '',
-	},
-	beforeCreate: function(){
-		if(self != top){
-			top.location.href = self.location.href;
-		}
-	},
-	methods: {
-		login: function () {
-			if(!this.sn){
-				$.toast("请输入会员编号");
-				return false
+$(function(){
+	new Vue({
+		el:'#page',
+		data:{
+			callback: '${callback }',
+			sn: '',
+		},
+		beforeCreate: function(){
+			if(self != top){
+				top.location.href = self.location.href;
 			}
-			$.showIndicator();
-            var data = "sn="+this.sn+"&callback="+this.callback;
-			$.ajax({
-				type: "POST",
-			    url: "${ctx}/user",
-			    data: data,
-			    dataType: "json",
-			    success: function(ret){
-			    	$.hideIndicator();
-					if(ret.code == 200){//登录成功
-                    	parent.location.href =ret.data.callback;
-					}else{
-						$.toast(ret.message);
-					}
+		},
+		methods: {
+			login: function () {
+				if(!this.sn){
+					$.toast("请输入订单编号");
+					return false
 				}
-			});
+				$.showIndicator();
+	            var data = "sn="+this.sn+"&callback="+this.callback;
+				$.ajax({
+					type: "POST",
+				    url: "${ctx}/user",
+				    data: data,
+				    dataType: "json",
+				    success: function(ret){
+				    	$.hideIndicator();
+						if(ret.code == 200){//登录成功
+	                    	parent.location.href =ret.data.callback;
+						}else{
+							$.toast(ret.message);
+						}
+					}
+				});
+			}
 		}
-	}
+	});
+	$.init();
 });
-$.init();
 </script>
 </body>
 </html>

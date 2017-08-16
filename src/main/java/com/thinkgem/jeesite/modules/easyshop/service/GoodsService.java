@@ -77,16 +77,17 @@ public class GoodsService extends CrudService<GoodsDao, Goods> {
 		goods = get(goods.getId());
 		user = userService.get(user.getId());
 		int integral = Integer.parseInt(user.getIntegral())-Integer.parseInt(goods.getIntegral());
-		int goodsNumber = Integer.parseInt(goods.getGoodsNumber())-1;
-		if(integral<0||goodsNumber<0){
+//		int goodsNumber = Integer.parseInt(goods.getGoodsNumber())-1;
+//		if(integral<0||goodsNumber<0){
+		if(integral<0){
 			return false;
 		}
 		user.setIntegral(integral+"");
 		userService.save(user);
 		
-		goods.preUpdate();
-		goods.setGoodsNumber(goodsNumber+"");
-		dao.update(goods);
+//		goods.preUpdate();
+//		goods.setGoodsNumber(goodsNumber+"");
+//		dao.update(goods);
 		return true;
 	}
 	

@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.modules.easyshop.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,4 +45,7 @@ public class QsIssueService extends CrudService<QsIssueDao, QsIssue> {
 		super.delete(qsIssue);
 	}
 	
+	public List<QsIssue> findListAndAnswer(Map<String, Object> param){
+		return dao.findListAndAnswer(param);
+	}
 }
