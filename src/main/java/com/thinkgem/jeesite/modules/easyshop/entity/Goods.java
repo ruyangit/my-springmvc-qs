@@ -1,6 +1,7 @@
 package com.thinkgem.jeesite.modules.easyshop.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 

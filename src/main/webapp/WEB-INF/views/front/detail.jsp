@@ -44,18 +44,21 @@
   </div>
     </div> 
   </div> -->
+  <c:if test="${not empty  tempImgs}">
   <div class="card" >
     <div class="card-header" style="font-size: .7rem;"><label style="margin: 0px auto;">商品详情</label></div>
     <div class="card-content">
-      <div class="card-content-inner" style="padding:0px;">${goods.goodsDesc}</div>
-      <script type="text/javascript">
-      	$.each($(".card-content-inner img"),function(){
-      		$(this).attr('style','width:100%')
-      	})
-      </script>
+      <div class="card-content-inner" style="padding:0px;">
+      	<c:forEach items="${tempImgs }" var="img">
+      		 <img alt="" src="${img }" style="width: 100%;vertical-align: middle;"><br/>
+      	</c:forEach>
+     
+      </div>
+     
     </div>
     <!-- <div class="card-footer">卡脚</div> -->
   </div>
+   </c:if>
 </div>
 <nav class="bar bar-tab">
 <!-- 

@@ -82,8 +82,10 @@
 		<div class="control-group">
 			<label class="control-label">商品图片：</label>
 			<div class="controls">
-				<form:textarea id="content" htmlEscape="true"  path="goodsDesc" rows="4" maxlength="200" class="input-xxlarge"/>
-				<sys:ckeditor replace="content" uploadPath="/easyshop/goods" />
+				<form:hidden id="goodsDesc" path="goodsDesc" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+				<sys:ckfinder input="goodsDesc" type="images" uploadPath="/easyshop/goods" selectMultiple="true"/>
+				<!--<form:textarea id="content" htmlEscape="true"  path="goodsDesc" rows="4" maxlength="200" class="input-xxlarge"/>
+				<sys:ckeditor replace="content" uploadPath="/easyshop/goods" />-->
 			</div>
 		</div>
 		

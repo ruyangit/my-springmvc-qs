@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.modules.easyshop.web.front;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,9 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.HttpUtil;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.easyshop.entity.Ad;
 import com.thinkgem.jeesite.modules.easyshop.entity.User;
+import com.thinkgem.jeesite.modules.easyshop.service.AdService;
 import com.thinkgem.jeesite.modules.easyshop.service.UserService;
 
 /**
@@ -34,6 +37,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AdService adService;
 
 	@RequestMapping(value = { "auth", "" }, method = RequestMethod.GET)
 	public String index(HttpServletRequest request, Model model) {
@@ -41,6 +47,12 @@ public class UserController extends BaseController {
 		if (StringUtils.isNotEmpty(callback)) {
 			model.addAttribute("callback", callback);
 		}
+		String bg = "";
+		List<Ad> list =  adService.findList(new Ad());
+		if(list!=null&&list.size()>0){
+			bg = list.get(0).getImageUrl();
+		}
+		model.addAttribute("bg", bg);
 		return "front/auth";
 	}
 	
@@ -55,7 +67,7 @@ public class UserController extends BaseController {
 		User user = userService.getBySn(sn);
 		if (user == null || !User.DEL_FLAG_NORMAL.equals(user.getDelFlag())) {
 			result.put("code", 400);
-			result.put("message", "信息获取失败");
+			result.put("message", "您输入的订单编号有误，请重新输入！");
 			return result;
 		}
 		request.getSession().setAttribute(User.SESSION_KEY, user);

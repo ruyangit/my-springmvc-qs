@@ -5,13 +5,29 @@
 <meta name="decorator" content="front_default"/>
 <title>编号认证</title>
 <script type='text/javascript' src="${ctxStatic}/vue/vue.js"></script>
+<style type="text/css">
+body{
+background-image: url('${bg}');
+    background-size: auto;
+    background-position: top;
+    background-repeat: no-repeat;
+
+}
+.page, .page-group{
+background:none;
+}
+.content{
+padding-top:65%;
+}
+</style>
 </head>
-<body>
+<body >
 <div class="page" id="page" v-cloak>
 <!-- 
 <header class="bar bar-nav">
   <h1 class="title">编号认证</h1>
 </header> -->
+
 <div class="content">
 	<div class="list-block">
     <ul>

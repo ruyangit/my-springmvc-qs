@@ -1,6 +1,8 @@
 package com.thinkgem.jeesite.modules.easyshop.web.front;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +81,18 @@ public class GoodsController extends BaseController {
 			addMessage(model, goods.getGoodsName() + "，未开放购买");
 			return "front/message";
 		}
+		if(goods.getGoodsDesc()!=null){
+			List<String> tempImgs = new ArrayList<>();
+			String[] ss = goods.getGoodsDesc().split("\\|");
+			for (String s : ss) {
+				if(StringUtils.isNotBlank(s)){
+					tempImgs.add(s);
+				}
+			}
+			
+			model.addAttribute("tempImgs", tempImgs);
+		}
+		
 		model.addAttribute("goods", goods);
 		model.addAttribute("user", user);
 		// String buyStatus = "0";
